@@ -1,10 +1,9 @@
-#!/bin/sh -l
+#!/bin/bash -l
 
-echo "#!/bin/sh -l" > /tmp/script.sh
-echo "$1" >> /tmp/script.sh
+cat <<EOF > /tmp/script.sh
+#!/bin/bash -l
+set -x
+$INPUT_SCRIPT
+EOF
 chmod +x /tmp/script.sh
 /tmp/script.sh |& tee -a $GITHUB_OUTPUT
-
-#echo "Hello $1"
-#time=$(date)
-#echo "time=$time" >> $GITHUB_OUTPUT
