@@ -3,7 +3,7 @@
 cat <<EOF > /tmp/script.sh
 #!/bin/bash -l
 
-#set -x
+set -x
 
 $INPUT_SCRIPT
 EOF
@@ -13,4 +13,4 @@ cat /tmp/script.sh
 echo "---- end of input_script -----"
 
 chmod +x /tmp/script.sh
-/tmp/script.sh |& tee -a $GITHUB_OUTPUT
+/tmp/script.sh
