@@ -3,8 +3,6 @@
 cat <<EOF > /tmp/script.sh
 #!/bin/bash -l
 
-set -x
-
 $INPUT_SCRIPT
 EOF
 
