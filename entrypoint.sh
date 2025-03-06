@@ -8,6 +8,7 @@ EOF
 
 pwd
 ls -alh
+ls -alh --recursive /github
 
 chmod +x /tmp/script.sh
 /tmp/script.sh
