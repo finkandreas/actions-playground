@@ -5,6 +5,24 @@ inputs:
   script:
     description: 'Script to run'
     required: true
+  firecrest-client-id:
+    description: "FirecREST client ID (aka Consumer Key)"
+    required: true
+  firecrest-client-secret:
+    description: "FirecREST client secret (aka Consumer Secret)"
+    required: true
+  firecrest-url:
+    description: "FirecREST URL"
+    required: true
+    default: "https://api.cscs.ch/hpc/firecrest"
+  firecrest-system:
+    description: "FirecREST machine"
+    required: true
+    default: "daint"
+  firecrest-token-url:
+    description: "FirecREST token URL"
+    required: true
+    default: "https://auth.cscs.ch/auth/realms/firecrest-clients/protocol/openid-connect/token"
 runs:
   using: 'docker'
   image: 'Dockerfile'

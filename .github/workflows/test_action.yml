@@ -17,6 +17,5 @@ jobs:
             echo "This is my first line"
             date
             env
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The output was ${{ steps.hello.outputs.time }}"
+          firecrest-client-id: ${{ secrets.FIRECREST_CLIENT_ID }}
+          firecrest-client-secret: ${{ secrets.FIRECREST_CLIENT_SECRET }}

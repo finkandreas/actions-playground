@@ -8,9 +8,9 @@ EOF
 
 pwd
 ls -alh
-ls -alh --recursive /github
+env
 
-chmod +x /tmp/script.sh
-/tmp/script.sh
+python3 /usr/local/bin/f7t_submit.py
 
-
+#chmod +x /tmp/script.sh
+#/tmp/script.sh
