@@ -1,4 +1,4 @@
-FROM python3:latest
+FROM python:latest
 
 RUN pip install pyfirecrest
 
