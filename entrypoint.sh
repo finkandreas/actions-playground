@@ -3,12 +3,14 @@
 cat <<EOF > /tmp/script.sh
 #!/bin/bash -l
 
+ls -alh $SCRATCH/
 $INPUT_SCRIPT
 EOF
 
 pwd
 ls -alh
 env
+which client
 
 python3 /usr/local/bin/f7t_submit.py
 
