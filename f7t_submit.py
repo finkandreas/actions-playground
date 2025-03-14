@@ -16,7 +16,7 @@ machine = os.environ['INPUT_FIRECREST-SYSTEM']
 allocation_name = f'ci-gha-{os.environ["GITHUB_RUN_ID"]}'
 glr_addr = 'cicd-ext-mw.cscs.ch'
 
-client_exec = ['/opt/glr-f7t/client', f'--addr={glr_addr}', f'--path=glr_f7t/wss/glr', f'--job-id={allocation_name}']
+client_exec = ['/opt/glr-f7t/client', f'--addr={glr_addr}', f'--path=glr_f7t/wss/glr', f'--job-id={allocation_name}', '--full-env']
 
 jobscript_tmpl = f'''#!/bin/bash -l
 {{{{ SBATCH_LINES }}}}
