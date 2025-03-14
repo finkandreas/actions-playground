@@ -122,7 +122,7 @@ elif 'SLURM_ACCOUNT' not in os.environ:
     raise RuntimeError("No account has been specified. You can set a default account on the CI setup page, or override with the variable SLURM_ACCOUNT")
 jobscript = jobscript_tmpl.replace("{{ SBATCH_LINES }}", '\n'.join(sbatch_lines))
 
-client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '2', **{f'CUSTOM_ENV_'+k:v for k,v in os.environ.items()}}
+client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '2', **{k:v for k,v in os.environ.items()}}
 worker_proc = subprocess.Popen(client_exec + ['--stage=config', '--exec', '/tmp/config.sh'], env=client_proc_env)
 
 client =  fc.v1.Firecrest(firecrest_url=url, authorization=fc.ClientCredentialsAuth(client_id, client_secret, auth_url, min_token_validity=60))
