@@ -122,7 +122,8 @@ elif 'SLURM_ACCOUNT' not in os.environ:
     raise RuntimeError("No account has been specified. You can set a default account on the CI setup page, or override with the variable SLURM_ACCOUNT")
 jobscript = jobscript_tmpl.replace("{{ SBATCH_LINES }}", '\n'.join(sbatch_lines))
 
-worker_proc = subprocess.Popen(client_exec + ['--stage=config', '--exec', '/tmp/config.sh'])
+client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '2', **{f'CUSTOM_ENV_'+k:v for k,v in os.environ.items()}}
+worker_proc = subprocess.Popen(client_exec + ['--stage=config', '--exec', '/tmp/config.sh'], env=client_proc_env)
 
 client =  fc.v1.Firecrest(firecrest_url=url, authorization=fc.ClientCredentialsAuth(client_id, client_secret, auth_url, min_token_validity=60))
 jobSubmit = client.submit(machine, script_str=jobscript)
@@ -131,10 +132,10 @@ print(f"Submitted job successfully to SLURM queue. Waiting for job to start. job
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running config stage, retcode={retcode}'
 
-worker_proc = subprocess.Popen(client_exec + ['--stage=run', '--exec', '/tmp/run.sh'])
+worker_proc = subprocess.Popen(client_exec + ['--stage=run', '--exec', '/tmp/run.sh'], env=client_proc_env)
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running run stage, retcode={retcode}'
 
-worker_proc = subprocess.Popen(client_exec + ['--stage=cleanup', '--exec', '/tmp/cleanup.sh', '--disconnect-cn'])
+worker_proc = subprocess.Popen(client_exec + ['--stage=cleanup', '--exec', '/tmp/cleanup.sh', '--disconnect-cn'], env=client_proc_env)
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running cleanup stage, retcode={retcode}'

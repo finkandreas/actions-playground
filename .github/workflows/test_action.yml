@@ -24,4 +24,4 @@ jobs:
         env:
           SLURM_ACCOUNT: csstaff
           SLURM_JOB_NUM_NODES: 1
-          SLURM_PARTITON: debug
+          SLURM_PARTITION: debug
