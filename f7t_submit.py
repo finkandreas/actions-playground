@@ -127,7 +127,7 @@ worker_proc = subprocess.Popen(client_exec + ['--stage=config', '--exec', '/tmp/
 
 client =  fc.v1.Firecrest(firecrest_url=url, authorization=fc.ClientCredentialsAuth(client_id, client_secret, auth_url, min_token_validity=60))
 jobSubmit = client.submit(machine, script_str=jobscript)
-print(f"Submitted job successfully to SLURM queue. Waiting for job to start. jobid={jobSubmit['jobid']} directory={os.path.dirname(jobSubmit['job_file'])}")
+print(f"Submitted job successfully to SLURM queue. Waiting for job to start. jobid={jobSubmit['jobid']} directory={os.path.dirname(jobSubmit['job_file'])}", flush=True)
 
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running config stage, retcode={retcode}'
