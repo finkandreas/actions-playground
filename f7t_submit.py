@@ -25,11 +25,11 @@ jobscript_tmpl = f'''#!/bin/bash -l
 
 [[ ! -v SCRATCH ]] && echo "SCRATCH variable is not set, this is an error" && exit 1
 ARCH=$(uname -m)
-HELPERS_DIR="$SCRATCH/gitlab-runner/bin/{os.environ['CUSTOM_ENV_CI_RUNNER_SHORT_TOKEN']}/$ARCH"
+HELPERS_DIR="$SCRATCH/github-actions/bin/$ARCH"
 mkdir -p "$HELPERS_DIR"
 export PATH=$HELPERS_DIR:$PATH
 
-for bin in gitlab-runner glr_client skopeo empty ; do
+for bin in glr_client skopeo empty ; do
     if ! file "$HELPERS_DIR/$bin" | grep -q "ELF 64-bit" ; then
         echo "The file $HELPERS_DIR/$bin does not seem to be a binary. Force re-download"
         rm "$HELPERS_DIR/$bin"
@@ -38,7 +38,7 @@ for bin in gitlab-runner glr_client skopeo empty ; do
     chmod +x "$HELPERS_DIR/$bin"
 done
 
-mkdir -p $SCRATCH/gitlab-runner/logs
+mkdir -p $SCRATCH/github-actions/logs
 
 if [[ -v http_proxy ]] ; then
     PROXIES=( "http_proxy=$http_proxy" "https_proxy=$https_proxy" "no_proxy=$no_proxy" )
@@ -51,7 +51,7 @@ exec env -i SCRATCH=$SCRATCH \\
        "${{PROXIES[@]}}" \\
        PATH=$PATH \\
        SLURM_JOB_ID=$SLURM_JOB_ID \\
-       glr_client --addr {glr_addr} --path /glr_f7t/wss/cn --job-id {allocation_name} --logfile $SCRATCH/gitlab-runner/logs/{os.environ['CUSTOM_ENV_CI_JOB_ID']}.log
+       glr_client --addr {glr_addr} --path /glr_f7t/wss/cn --job-id {allocation_name} --logfile $SCRATCH/github-actions/logs/{os.environ["GITHUB_RUN_ID"]}.log
 '''
 
 slurm_opts = {
