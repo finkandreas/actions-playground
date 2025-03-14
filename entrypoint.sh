@@ -3,7 +3,6 @@
 cat <<EOF > /tmp/run.sh
 #!/bin/bash -l
 
-ls -alh $SCRATCH/
 $INPUT_SCRIPT
 EOF
 

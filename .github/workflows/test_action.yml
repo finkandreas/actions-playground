@@ -14,7 +14,9 @@ jobs:
         id: hello
         with:
           script: |
+            set -x
             echo "This is my first line"
+            ls -alh $SCRATCH
             date
             env
             ls -alh
