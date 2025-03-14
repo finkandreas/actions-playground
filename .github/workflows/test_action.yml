@@ -19,3 +19,6 @@ jobs:
             env
           firecrest-client-id: ${{ secrets.FIRECREST_CLIENT_ID }}
           firecrest-client-secret: ${{ secrets.FIRECREST_CLIENT_SECRET }}
+        env:
+          SLURM_ACCOUNT: csstaff
+          SLURM_JOB_NUM_NODES: 1
