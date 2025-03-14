@@ -29,14 +29,14 @@ HELPERS_DIR="$SCRATCH/github-actions/bin/$ARCH"
 mkdir -p "$HELPERS_DIR"
 export PATH=$HELPERS_DIR:$PATH
 
-for bin in glr_client skopeo empty ; do
-    if ! file "$HELPERS_DIR/$bin" | grep -q "ELF 64-bit" ; then
-        echo "The file $HELPERS_DIR/$bin does not seem to be a binary. Force re-download"
-        rm "$HELPERS_DIR/$bin"
-    fi
-    curl -z "$HELPERS_DIR/$bin" -o "$HELPERS_DIR/$bin" https://{glr_addr}/glr_f7t/assets/$ARCH/$bin
-    chmod +x "$HELPERS_DIR/$bin"
-done
+#for bin in glr_client skopeo empty ; do
+#    if ! file "$HELPERS_DIR/$bin" | grep -q "ELF 64-bit" ; then
+#        echo "The file $HELPERS_DIR/$bin does not seem to be a binary. Force re-download"
+#        rm "$HELPERS_DIR/$bin"
+#    fi
+#    curl -z "$HELPERS_DIR/$bin" -o "$HELPERS_DIR/$bin" https://{glr_addr}/glr_f7t/assets/$ARCH/$bin
+#    chmod +x "$HELPERS_DIR/$bin"
+#done
 
 mkdir -p $SCRATCH/github-actions/logs
 
