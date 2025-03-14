@@ -10,7 +10,7 @@ EOF
 pwd
 ls -alh
 env
-which client
+ls -alh /opt/glr-f7t/client
 
 python3 /usr/local/bin/f7t_submit.py
 
