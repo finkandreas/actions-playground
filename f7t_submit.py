@@ -131,7 +131,7 @@ exclude_env_forwarding = [
     'INPUT_FIRECREST-CLIENT-ID',
 ]
 client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '2', **{k:v for k,v in os.environ.items() if k not in exclude_env_forwarding}}
-worker_proc = subprocess.Popen(client_exec + ['--stage=config', '--exec', '/tmp/config.sh', '--with-file=/tmp/repo.tar.gz:common.sh'], env=client_proc_env)
+worker_proc = subprocess.Popen(client_exec + ['--stage=config', '--exec', '/tmp/config.sh', '--with-file=/tmp/repo.tar.gz:repo.tar.gz'], env=client_proc_env)
 
 client =  fc.v1.Firecrest(firecrest_url=url, authorization=fc.ClientCredentialsAuth(client_id, client_secret, auth_url, min_token_validity=60))
 jobSubmit = client.submit(machine, script_str=jobscript)
