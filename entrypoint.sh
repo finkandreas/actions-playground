@@ -8,7 +8,9 @@ EOF
 
 cat <<EOF > /tmp/config.sh
 #!/bin/bash -l
-echo "not doing anything in config stage"
+
+echo "config stage: SCRATCH=$SCRATCH"
+#mkdir $SCRATCH/github-actions/run/$GITHUB_RUN_ID
 EOF
 
 cat <<EOF > /tmp/cleanup.sh
@@ -20,6 +22,8 @@ EOF
 #ls -alh
 #env
 #ls -alh /opt/glr-f7t/client
+
+cat $GITHUB_EVENT_PATH
 
 python3 /usr/local/bin/f7t_submit.py
 
