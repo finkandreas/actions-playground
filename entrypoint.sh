@@ -1,5 +1,7 @@
 #!/bin/bash -l
 
+RUN_PATH=$GITHUB_REPOSITORY_ID/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
+
 cat <<EOF > /tmp/run.sh
 #!/bin/bash -l
 
@@ -9,8 +11,8 @@ EOF
 cat <<EOF > /tmp/config.sh
 #!/bin/bash -l
 
-echo "config stage: SCRATCH=$SCRATCH"
-#mkdir $SCRATCH/github-actions/run/$GITHUB_RUN_ID
+echo "config stage: SCRATCH=\$SCRATCH"
+mkdir \$SCRATCH/github-actions/run/$RUN_PATH
 EOF
 
 cat <<EOF > /tmp/cleanup.sh
@@ -22,8 +24,7 @@ EOF
 #ls -alh
 #env
 #ls -alh /opt/glr-f7t/client
-
-cat $GITHUB_EVENT_PATH
+#cat $GITHUB_EVENT_PATH
 
 python3 /usr/local/bin/f7t_submit.py
 
