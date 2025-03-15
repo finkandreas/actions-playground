@@ -26,6 +26,9 @@ EOF
 #ls -alh /opt/glr-f7t/client
 #cat $GITHUB_EVENT_PATH
 
+env --chdir=/github tar -czf /tmp/repo.tar.gz .
+ls -alh /tmp/repo.tar.gz
+
 python3 /usr/local/bin/f7t_submit.py
 
 #chmod +x /tmp/script.sh
