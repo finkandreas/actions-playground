@@ -5,6 +5,9 @@ RUN_PATH=$GITHUB_REPOSITORY_ID/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
 cat <<EOF > /tmp/run.sh
 #!/bin/bash -l
 
+# execute user's input script in the github action's run path
+cd \$SCRATCH/github-actions/run/$RUN_PATH
+#TODO: Adapt github envvars that point to files/directories in that path
 $INPUT_SCRIPT
 EOF
 
@@ -13,6 +16,8 @@ cat <<EOF > /tmp/config.sh
 
 echo "config stage: SCRATCH=\$SCRATCH"
 mkdir -p \$SCRATCH/github-actions/run/$RUN_PATH
+
+tar -xf repo.tar.gz -C \$SCRATCH/github-actions/run/$RUN_PATH
 EOF
 
 cat <<EOF > /tmp/cleanup.sh

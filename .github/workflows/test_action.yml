@@ -1,21 +1,21 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  job-on-compute-node:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A job to run on the compute node
     steps:
       # To use this repository's action,
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Hello world action step
+      - name: Run on compute node
         uses: ./ # Uses an action in the root directory
-        id: hello
+        id: firecrest
         with:
           script: |
             set -x
-            echo "This is my first line"
+            echo "This is my first line and it is running on hostname=$HOSTNAME"
             ls -alh $SCRATCH
             date
             env
