@@ -6,7 +6,7 @@ cat <<EOF > /tmp/run.sh
 #!/bin/bash -l
 
 # execute user's input script in the github action's run path
-cd \$SCRATCH/github-actions/run/$RUN_PATH
+cd \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 #TODO: Adapt github envvars that point to files/directories in that path
 $INPUT_SCRIPT
 EOF
