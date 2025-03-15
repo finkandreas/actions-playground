@@ -12,7 +12,7 @@ cat <<EOF > /tmp/config.sh
 #!/bin/bash -l
 
 echo "config stage: SCRATCH=\$SCRATCH"
-mkdir \$SCRATCH/github-actions/run/$RUN_PATH
+mkdir -p \$SCRATCH/github-actions/run/$RUN_PATH
 EOF
 
 cat <<EOF > /tmp/cleanup.sh
