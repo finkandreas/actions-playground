@@ -2,16 +2,16 @@ import firecrest as fc
 import os
 import subprocess
 
-client_id = os.environ.get("INPUT_FIRECREST-CLIENT-ID", "")
-client_secret = os.environ.get("INPUT_FIRECREST-CLIENT-SECRET", "")
+client_id = os.environ.get("INPUT_FIRECREST_CLIENT_ID", "")
+client_secret = os.environ.get("INPUT_FIRECREST_CLIENT_SECRET", "")
 if client_id == "" or client_secret == "":
     print("The client-id or client-secret is empty. Please provide the firecrest credentials")
     exit(1)
 
-url = os.environ['INPUT_FIRECREST-URL']
-auth_url = os.environ['INPUT_FIRECREST-TOKEN-URL']
+url = os.environ['INPUT_FIRECREST_URL']
+auth_url = os.environ['INPUT_FIRECREST_TOKEN_URL']
 
-machine = os.environ['INPUT_FIRECREST-SYSTEM']
+machine = os.environ['INPUT_FIRECREST_SYSTEM']
 
 allocation_name = f'ci-gha-{os.environ["GITHUB_RUN_ID"]}'
 glr_addr = 'cicd-ext-mw.cscs.ch'
@@ -124,18 +124,19 @@ jobscript = jobscript_tmpl.replace("{{ SBATCH_LINES }}", '\n'.join(sbatch_lines)
 
 exclude_env_forwarding = [
     'INPUT_SCRIPT',
-    'INPUT_FIRECREST-TOKEN-URL',
-    'INPUT_FIRECREST-URL',
-    'INPUT_FIRECREST-SYSTEM',
-    'INPUT_FIRECREST-CLIENT-SECRET',
-    'INPUT_FIRECREST-CLIENT-ID',
-    'INPUT_STAGE-TO-COMPUTE-NODE',
-    'INPUT_STAGE-FROM-COMPUTE-NODE',
+    'INPUT_FIRECREST_TOKEN_URL',
+    'INPUT_FIRECREST_URL',
+    'INPUT_FIRECREST_SYSTEM',
+    'INPUT_FIRECREST_CLIENT_SECRET',
+    'INPUT_FIRECREST_CLIENT_ID',
+    'INPUT_STAGE_TO_COMPUTE_NODE',
+    'INPUT_STAGE_FROM_COMPUTE_NODE',
 ]
 client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '2', **{k:v for k,v in os.environ.items() if k not in exclude_env_forwarding}}
 args = client_exec + ['--stage=config', '--exec', '/tmp/config.sh']
-if os.environ.get('INPUT_STAGE-TO-COMPUTE-NODE', 'false') == 'true':
+if os.environ.get('INPUT_STAGE_TO_COMPUTE_NODE', 'false') == 'true':
     args.append('with-file=/tmp/repo.tar.gz:repo.tar.gz')
+print(f"Executing worker proc with {args=}")
 worker_proc = subprocess.Popen(args, env=client_proc_env)
 
 client =  fc.v1.Firecrest(firecrest_url=url, authorization=fc.ClientCredentialsAuth(client_id, client_secret, auth_url, min_token_validity=60))
@@ -146,8 +147,9 @@ retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running config stage, retcode={retcode}'
 
 args = client_exec + ['--stage=run', '--exec', '/tmp/run.sh']
-if os.environ.get('INPUT_STAGE-FROM-COMPUTE-NODE', 'false') == 'true':
+if os.environ.get('INPUT_STAGE_FROM_COMPUTE_NODE', 'false') == 'true':
     args.append('--return-file=/tmp/repo.tar.gz:repo.tar.gz')
+print(f"Executing worker proc with {args=}")
 worker_proc = subprocess.Popen(args, env=client_proc_env)
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running run stage, retcode={retcode}'

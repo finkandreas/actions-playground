@@ -5,29 +5,29 @@ inputs:
   script:
     description: 'Script to run'
     required: true
-  firecrest-client-id:
+  firecrest_client_id:
     description: "FirecREST client ID (aka Consumer Key)"
     required: true
-  firecrest-client-secret:
+  firecrest_client_secret:
     description: "FirecREST client secret (aka Consumer Secret)"
     required: true
-  firecrest-url:
+  firecrest_url:
     description: "FirecREST URL"
     required: true
     default: "https://api.cscs.ch/hpc/firecrest"
-  firecrest-system:
+  firecrest_system:
     description: "FirecREST machine"
     required: true
     default: "daint"
-  firecrest-token-url:
+  firecrest_token_url:
     description: "FirecREST token URL"
     required: true
     default: "https://auth.cscs.ch/auth/realms/firecrest-clients/protocol/openid-connect/token"
-  stage-to-compute-node:
+  stage_to_compute_node:
     description: "Stage workspace and github env/output files to compute node"
     required: true
     default: "true"
-  stage-from-compute-node:
+  stage_from_compute_node:
     description: "Stage workspace and github env/output files from compute node"
     required: true
     default: "true"
