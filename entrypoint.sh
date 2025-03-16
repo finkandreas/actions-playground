@@ -54,4 +54,5 @@ ls -alh /tmp/repo.tar.gz
 cd /tmp
 tar -vxzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
 cd /github
+chmod 1001:118 --recursive /github
 ls -alh --recursive /github

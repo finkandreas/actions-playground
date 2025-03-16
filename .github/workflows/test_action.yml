@@ -15,7 +15,7 @@ jobs:
         with:
           script: |
             set -x
-            echo "This is my first line and it is running on hostname=$HOSTNAME"
+            echo "This is my first line and it is running on hostname=$(hostname)"
             ls -alh $SCRATCH
             hostname > some_new_file
             date
