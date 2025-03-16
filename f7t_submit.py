@@ -136,7 +136,6 @@ client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '
 args = client_exec + ['--stage=config', '--exec', '/tmp/config.sh']
 if os.environ.get('INPUT_STAGE_TO_COMPUTE_NODE', 'false') == 'true':
     args.append('--with-file=/tmp/repo.tar.gz:repo.tar.gz')
-print(f"Executing worker proc with {args=}")
 worker_proc = subprocess.Popen(args, env=client_proc_env)
 
 client =  fc.v1.Firecrest(firecrest_url=url, authorization=fc.ClientCredentialsAuth(client_id, client_secret, auth_url, min_token_validity=60))
@@ -149,7 +148,6 @@ assert retcode == 0, f'Failed running config stage, retcode={retcode}'
 args = client_exec + ['--stage=run', '--exec', '/tmp/run.sh']
 if os.environ.get('INPUT_STAGE_FROM_COMPUTE_NODE', 'false') == 'true':
     args.append('--return-file=/tmp/repo.tar.gz:repo.tar.gz')
-print(f"Executing worker proc with {args=}")
 worker_proc = subprocess.Popen(args, env=client_proc_env)
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running run stage, retcode={retcode}'
