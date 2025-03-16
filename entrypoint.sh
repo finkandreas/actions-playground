@@ -1,5 +1,7 @@
 #!/bin/bash -l
 
+set -e
+
 RUN_PATH=$GITHUB_REPOSITORY_ID/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
 
 cat <<EOF > /tmp/run.sh
@@ -54,5 +56,5 @@ ls -alh /tmp/repo.tar.gz
 cd /tmp
 tar -vxzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
 cd /github
-chmod 1001:118 --recursive /github
+chmod --reference=/github --recursive /github
 ls -alh --recursive /github
