@@ -5,10 +5,16 @@ RUN_PATH=$GITHUB_REPOSITORY_ID/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
 cat <<EOF > /tmp/run.sh
 #!/bin/bash -l
 
+STARTUP_DIR="$\PWD"
+
 # execute user's input script in the github action's run path
 cd \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 #TODO: Adapt github envvars that point to files/directories in that path
 $INPUT_SCRIPT
+
+cd "\$STARTUP_DIR"
+rm -f repo.tar.gz
+tar -C "\$SCRATCH/github-actions/run/$RUN_PATH" -czf repo.tar.gz .
 EOF
 
 cat <<EOF > /tmp/config.sh

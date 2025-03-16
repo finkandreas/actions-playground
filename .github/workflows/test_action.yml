@@ -17,6 +17,7 @@ jobs:
             set -x
             echo "This is my first line and it is running on hostname=$HOSTNAME"
             ls -alh $SCRATCH
+            touch some_new_file
             date
             env
             ls -alh
