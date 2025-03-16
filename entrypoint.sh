@@ -15,9 +15,8 @@ echo "STARTUP_DIR=\$STARTUP_DIR"
 # execute user's input script in the github action's run path
 cd \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 #TODO: Adapt github envvars that point to files/directories in that path
-$INPUT_SCRIPT
+( set -x ; $INPUT_SCRIPT )
 
-set +x
 cd "\$STARTUP_DIR"
 rm -f repo.tar.gz
 tar -C "\$SCRATCH/github-actions/run/$RUN_PATH" -czf repo.tar.gz .
@@ -56,5 +55,5 @@ ls -alh /tmp/repo.tar.gz
 cd /tmp
 tar -vxzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
 cd /github
-chmod --reference=/github --recursive /github
+chown --reference=/github/workspace --recursive /github/*
 ls -alh --recursive /github
