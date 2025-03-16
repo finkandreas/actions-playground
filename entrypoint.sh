@@ -50,6 +50,6 @@ python3 /usr/local/bin/f7t_submit.py
 
 # extract workspace that was sent back from compute node
 cd /tmp
-tar -vxzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
+tar -xzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
 cd /github
 chown --reference=/github/workspace --recursive /github/*
