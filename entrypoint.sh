@@ -58,6 +58,7 @@ EOF
 
 # pack workspace to send to compute node
 if [[ "${INPUT_STAGE_TO_COMPUTE_NODE}" == "true" ]] ; then
+    echo "Staging /github directory and will send it to the compute node"
     tar -czf /tmp/repo.tar.gz -C /github .
 fi
 
@@ -66,6 +67,7 @@ python3 /usr/local/bin/f7t_submit.py
 
 # extract workspace that was sent back from compute node
 if [[ "${INPUT_STAGE_FROM_COMPUTE_NODE}" == "true" ]] ; then
+    echo "Stage back /github directory from compute node"
     cd /tmp
     tar -xzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
     cd /github
