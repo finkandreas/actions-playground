@@ -17,7 +17,7 @@ jobs:
             set -x
             echo "This is my first line and it is running on hostname=$HOSTNAME"
             ls -alh $SCRATCH
-            touch some_new_file
+            hostname > some_new_file
             date
             env
             ls -alh
@@ -28,3 +28,8 @@ jobs:
           SLURM_ACCOUNT: csstaff
           SLURM_JOB_NUM_NODES: 1
           SLURM_PARTITION: debug
+      - name: Inspect workspace
+        run: |
+          ls -alh
+          pwd
+          cat some_new_file
