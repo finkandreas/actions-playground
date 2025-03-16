@@ -26,9 +26,6 @@ if [[ "${INPUT_STAGE_FROM_COMPUTE_NODE}" == "true" ]] ; then
 fi
 EOF
 
-echo run.sh
-cat /tmp/run.sh
-
 cat <<EOF > /tmp/config.sh
 #!/bin/bash -l
 
@@ -41,9 +38,6 @@ else
     mkdir -p \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 fi
 EOF
-
-echo "config.sh"
-cat /tmp/config.sh
 
 cat <<EOF > /tmp/cleanup.sh
 #!/bin/bash -l

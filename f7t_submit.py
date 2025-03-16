@@ -135,7 +135,7 @@ exclude_env_forwarding = [
 client_proc_env = {'SYSTEM_FAILURE_EXIT_CODE': '1', 'BUILD_FAILURE_EXIT_CODE': '2', **{k:v for k,v in os.environ.items() if k not in exclude_env_forwarding}}
 args = client_exec + ['--stage=config', '--exec', '/tmp/config.sh']
 if os.environ.get('INPUT_STAGE_TO_COMPUTE_NODE', 'false') == 'true':
-    args.append('with-file=/tmp/repo.tar.gz:repo.tar.gz')
+    args.append('--with-file=/tmp/repo.tar.gz:repo.tar.gz')
 print(f"Executing worker proc with {args=}")
 worker_proc = subprocess.Popen(args, env=client_proc_env)
 
