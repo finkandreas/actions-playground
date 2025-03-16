@@ -23,6 +23,14 @@ inputs:
     description: "FirecREST token URL"
     required: true
     default: "https://auth.cscs.ch/auth/realms/firecrest-clients/protocol/openid-connect/token"
+  stage-to-compute-node:
+    description: "Stage workspace and github env/output files to compute node"
+    required: true
+    default: "true"
+  stage-from-compute-node:
+    description: "Stage workspace and github env/output files from compute node"
+    required: true
+    default: "true"
 runs:
   using: 'docker'
   image: 'Dockerfile'
