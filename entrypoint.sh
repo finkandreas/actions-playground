@@ -15,7 +15,9 @@ echo "STARTUP_DIR=\$STARTUP_DIR"
 # execute user's input script in the github action's run path
 cd \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 #TODO: Adapt github envvars that point to files/directories in that path
-( set -x ; $INPUT_SCRIPT )
+
+# run user's input script in a separate shell, to avoid side-effects of any user commands to this shell
+( set -e ; $INPUT_SCRIPT )
 
 cd "\$STARTUP_DIR"
 rm -f repo.tar.gz
