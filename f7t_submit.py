@@ -140,7 +140,7 @@ print(f"Submitted job successfully to SLURM queue. Waiting for job to start. job
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running config stage, retcode={retcode}'
 
-worker_proc = subprocess.Popen(client_exec + ['--stage=run', '--exec', '/tmp/run.sh'], env=client_proc_env)
+worker_proc = subprocess.Popen(client_exec + ['--stage=run', '--exec', '/tmp/run.sh' '--return-file=repo.tar.gz:/tmp/repo.tar.gz'], env=client_proc_env)
 retcode = worker_proc.wait()
 assert retcode == 0, f'Failed running run stage, retcode={retcode}'
 

@@ -15,6 +15,7 @@ cd \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 #TODO: Adapt github envvars that point to files/directories in that path
 $INPUT_SCRIPT
 
+set +x
 cd "\$STARTUP_DIR"
 rm -f repo.tar.gz
 tar -C "\$SCRATCH/github-actions/run/$RUN_PATH" -czf repo.tar.gz .
@@ -40,9 +41,11 @@ EOF
 #ls -alh /opt/glr-f7t/client
 #cat $GITHUB_EVENT_PATH
 
-env --chdir=/github tar -czf /tmp/repo.tar.gz .
+# pack workspace to send to compute node
+tar -czf /tmp/repo.tar.gz -C /github .
 
+# start job on compute node and run user script
 python3 /usr/local/bin/f7t_submit.py
 
-#chmod +x /tmp/script.sh
-#/tmp/script.sh
+# extract workspace that was sent back from compute node
+tar -xzf /tmp/repo.tar.gz -C /github
