@@ -43,9 +43,11 @@ EOF
 
 # pack workspace to send to compute node
 tar -czf /tmp/repo.tar.gz -C /github .
+ls -alh /tmp/repo.tar.gz
 
 # start job on compute node and run user script
 python3 /usr/local/bin/f7t_submit.py
 
 # extract workspace that was sent back from compute node
-tar -xzf /tmp/repo.tar.gz -C /github
+ls -alh /tmp/repo.tar.gz
+tar -vxzf /tmp/repo.tar.gz -C /github
