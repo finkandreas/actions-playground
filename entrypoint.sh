@@ -42,6 +42,7 @@ EOF
 #cat $GITHUB_EVENT_PATH
 
 # pack workspace to send to compute node
+ls -alh --recursive /github
 tar -czf /tmp/repo.tar.gz -C /github .
 ls -alh /tmp/repo.tar.gz
 
@@ -50,4 +51,7 @@ python3 /usr/local/bin/f7t_submit.py
 
 # extract workspace that was sent back from compute node
 ls -alh /tmp/repo.tar.gz
-tar -vxzf /tmp/repo.tar.gz -C /github
+cd /tmp
+tar -vxzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
+cd /github
+ls -alh --recursive /github
