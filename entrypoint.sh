@@ -19,12 +19,15 @@ cd \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 # run user's input script in a separate shell, to avoid side-effects of any user commands to this shell
 ( set -e ; $INPUT_SCRIPT )
 
-if [[ $INPUT_STAGE-FROM-COMPUTE-NODE == "true" ]] ; then
+if [[ "${INPUT_STAGE-FROM-COMPUTE-NODE}" == "true" ]] ; then
     cd "\$STARTUP_DIR"
     rm -f repo.tar.gz
     tar -C "\$SCRATCH/github-actions/run/$RUN_PATH" -czf repo.tar.gz .
 fi
 EOF
+
+echo run.sh
+cat /tmp/run.sh
 
 cat <<EOF > /tmp/config.sh
 #!/bin/bash -l
@@ -32,12 +35,15 @@ cat <<EOF > /tmp/config.sh
 echo "config stage: SCRATCH=\$SCRATCH"
 mkdir -p \$SCRATCH/github-actions/run/$RUN_PATH
 
-if [[ $INPUT_STAGE-TO-COMPUTE-NODE == "true" ]] ; then
+if [[ "${INPUT_STAGE-TO-COMPUTE-NODE}" == "true" ]] ; then
     tar -xf repo.tar.gz -C \$SCRATCH/github-actions/run/$RUN_PATH
 else
     mkdir -p \$SCRATCH/github-actions/run/$RUN_PATH/workspace
 fi
 EOF
+
+echo "config.sh"
+cat /tmp/config.sh
 
 cat <<EOF > /tmp/cleanup.sh
 #!/bin/bash -l
@@ -51,7 +57,7 @@ EOF
 #cat $GITHUB_EVENT_PATH
 
 # pack workspace to send to compute node
-if [[ $INPUT_STAGE-TO-COMPUTE-NODE == "true" ]] ; then
+if [[ "${INPUT_STAGE-TO-COMPUTE-NODE}" == "true" ]] ; then
     tar -czf /tmp/repo.tar.gz -C /github .
 fi
 
@@ -59,7 +65,7 @@ fi
 python3 /usr/local/bin/f7t_submit.py
 
 # extract workspace that was sent back from compute node
-if [[ $INPUT_STAGE-FROM-COMPUTE-NODE == "true" ]] ; then
+if [[ "${INPUT_STAGE-FROM-COMPUTE-NODE}" == "true" ]] ; then
     cd /tmp
     tar -xzf /tmp/repo.tar.gz --no-overwrite-dir -C /github
     cd /github
