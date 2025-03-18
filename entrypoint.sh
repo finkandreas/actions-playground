@@ -14,7 +14,7 @@ echo "STARTUP_DIR=\$STARTUP_DIR"
 
 for var_name in GITHUB_STEP_SUMMARY GITHUB_STATE GITHUB_ENV GITHUB_PATH GITHUB_OUTPUT GITHUB_WORKSPACE HOME GITHUB_EVENT_PATH ; do
     # warp GITHUB_* variables to the changed path of the workspace
-    export \$var_name=${!var_name/#"/github"/"\$SCRATCH/github-actions/run/$RUN_PATH"}
+    export \$var_name=\${!var_name/#"/github"/"\$SCRATCH/github-actions/run/$RUN_PATH"}
 done
 
 # execute user's input script in the github action's run path
